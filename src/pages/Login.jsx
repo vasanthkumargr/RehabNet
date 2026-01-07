@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { adminLogin } from "../api/auth.api";
-import { setToken } from "../services/token.service";
+import { adminLogin } from "../api/auth_api";
+import { settoken } from "../services/token-service";
+import "../styles/login.css"; // Import the CSS file
 
 export default function Login() {
   const [form, setForm] = useState({
@@ -32,11 +33,11 @@ export default function Login() {
   };
 
   return (
-    <div style={styles.container}>
-      <form onSubmit={handleSubmit} style={styles.card}>
-        <h2 style={styles.title}>Admin Login</h2>
+    <div className="login-container">
+      <form onSubmit={handleSubmit} className="login-card">
+        <h2 className="login-title">Admin Login</h2>
 
-        {error && <p style={styles.error}>{error}</p>}
+        {error && <p className="login-error">{error}</p>}
 
         <input
           type="text"
@@ -45,7 +46,7 @@ export default function Login() {
           value={form.username}
           onChange={handleChange}
           required
-          style={styles.input}
+          className="login-input"
         />
 
         <input
@@ -55,10 +56,10 @@ export default function Login() {
           value={form.password}
           onChange={handleChange}
           required
-          style={styles.input}
+          className="login-input"
         />
 
-        <button type="submit" disabled={loading} style={styles.button}>
+        <button type="submit" disabled={loading} className="login-button">
           {loading ? "Logging in..." : "Login"}
         </button>
       </form>
