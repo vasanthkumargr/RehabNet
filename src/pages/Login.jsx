@@ -1,68 +1,52 @@
 import { useState } from "react";
 import { adminLogin } from "../api/auth_api";
-import { settoken } from "../services/token-service";
+import { setToken } from "../services/token.service";
 import "../styles/login.css"; // Import the CSS file
 
 export default function Login() {
-  const [form, setForm] = useState({
-    username: "",
-    password: ""
-  });
-
-  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const submit = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await adminLogin(form);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+    console.log("LOGIN RESPONSE:", res);
+    console.log("TOKEN RECEIVED:", res.data.token);
 
-    try {
-      const res = await adminLogin(form);
-      setToken(res.data.token);
-      window.location.href = "/dashboard";
-    } catch (err) {
-      setError("Invalid username or password");
-    } finally {
-      setLoading(false);
-    }
-  };
+    setToken(res.data.token);
+
+    alert("Login success, token saved");
+    window.location.replace("/dashboard");
+  } catch (err) {
+    console.error("LOGIN ERROR:", err);
+    alert("Login failed");
+  }
+};
+
 
   return (
-    <div className="login-container">
-      <form onSubmit={handleSubmit} className="login-card">
-        <h2 className="login-title">Admin Login</h2>
+    <form onSubmit={submit}>
+      <h2>Admin Login</h2>
 
-        {error && <p className="login-error">{error}</p>}
+      <input
+        placeholder="Username"
+        onChange={(e) =>
+          setForm({ ...form, username: e.target.value })
+        }
+      />
 
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={form.username}
-          onChange={handleChange}
-          required
-          className="login-input"
-        />
+      <input
+        type="password"
+        placeholder="Password"
+        onChange={(e) =>
+          setForm({ ...form, password: e.target.value })
+        }
+      />
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          required
-          className="login-input"
-        />
-
-        <button type="submit" disabled={loading} className="login-button">
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
-    </div>
+      <button type="submit">Login</button>
+      {error && <p>{error}</p>}
+    </form>
   );
 }
