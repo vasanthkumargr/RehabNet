@@ -1,0 +1,41 @@
+const styles = {
+  container: {
+    height: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: "#f4f6f8"
+  },
+  card: {
+    width: "320px",
+    padding: "30px",
+    background: "#fff",
+    borderRadius: "8px",
+    boxShadow: "0 0 10px rgba(0,0,0,0.1)"
+  },
+  title: {
+    marginBottom: "20px",
+    textAlign: "center"
+  },
+  input: {
+    width: "100%",
+    padding: "10px",
+    marginBottom: "15px",
+    borderRadius: "4px",
+    border: "1px solid #ccc"
+  },
+  button: {
+    width: "100%",
+    padding: "10px",
+    background: "#000",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer"
+  },
+  error: {
+    color: "red",
+    marginBottom: "10px",
+    textAlign: "center"
+  }
+};
